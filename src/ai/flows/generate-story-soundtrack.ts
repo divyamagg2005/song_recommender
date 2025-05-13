@@ -33,11 +33,16 @@ const GenerateStorySoundtrackInputSchema = z.object({
 
 export type GenerateStorySoundtrackInput = z.infer<typeof GenerateStorySoundtrackInputSchema>;
 
-const GenerateStorySoundtrackOutputSchema = z.object({
+const SongRecommendationSchema = z.object({
   songTitle: z.string().describe('The title of the recommended song.'),
   songArtist: z.string().describe('The artist of the recommended song.'),
   catchyLyric: z.string().describe('A catchy lyric from the song that matches the vibe.'),
   reasoning: z.string().describe('Reasoning behind the song and lyric recommendation.'),
+});
+export type SongRecommendation = z.infer<typeof SongRecommendationSchema>;
+
+const GenerateStorySoundtrackOutputSchema = z.object({
+  recommendations: z.array(SongRecommendationSchema).min(5).describe('A list of at least 5 song recommendations, each with a song title, artist, catchy lyric, and reasoning.'),
 });
 
 export type GenerateStorySoundtrackOutput = z.infer<typeof GenerateStorySoundtrackOutputSchema>;
@@ -76,17 +81,18 @@ User's input:
   (Analyze this image if provided to enhance the recommendation.)
 {{/if}}
 
-Based on all the provided information (including image analysis if an image is present), recommend one song.
-Provide:
-1.  The song title.
-2.  The song artist.
-3.  A short, catchy lyric from the song that would be perfect for the story.
-4.  A brief reasoning for your choice, explaining how the song and lyric fit the user's input.
+Based on all the provided information (including image analysis if an image is present), recommend a list of AT LEAST 5 songs.
+The output must be an object containing a key "recommendations", which is an array of song objects.
+Each song object in the "recommendations" array must include:
+1.  "songTitle": The title of the recommended song.
+2.  "songArtist": The artist of the recommended song.
+3.  "catchyLyric": A short, catchy lyric from the song that would be perfect for the story.
+4.  "reasoning": A brief reasoning for your choice, explaining how the song and lyric fit the user's input.
 
-Ensure the song title and artist are accurate. The catchy lyric should be impactful and relevant.
+Ensure each song title and artist are accurate. Each catchy lyric should be impactful and relevant.
 If the preferred language is 'Any', you can choose any language, but English is a good default unless the context strongly suggests otherwise. If a specific language is mentioned (either in preferredLanguage or otherLanguage), prioritize that language.
 Consider the posting platform and song recency preferences.
-The output fields songTitle, songArtist, catchyLyric, and reasoning must be populated.
+The "recommendations" array must contain at least 5 distinct song recommendations. Each recommendation must have all four fields (songTitle, songArtist, catchyLyric, reasoning) populated.
 `,
 });
 
@@ -98,9 +104,10 @@ const generateStorySoundtrackFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    if (!output) {
-      throw new Error('AI failed to generate a soundtrack.');
+    if (!output || !output.recommendations || output.recommendations.length < 1) { // Zod schema will enforce min(5) on final output
+      throw new Error('AI failed to generate sufficient soundtrack recommendations.');
     }
     return output;
   }
 );
+

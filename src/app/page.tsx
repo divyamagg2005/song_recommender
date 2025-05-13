@@ -7,7 +7,7 @@ import SongRecommendationCard from '@/components/song-recommendation-card';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import type { GenerateStorySoundtrackOutput } from '@/ai/flows/generate-story-soundtrack';
-import { getTopTracks, type GetTopTracksOutput, type Track } from '@/ai/flows/get-top-tracks';
+import { getTopTracks, type Track } from '@/ai/flows/get-top-tracks';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle, Music, ListMusic, Info, ServerCrash, Music2 } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 
 
 export default function HomePage() {
-  const [recommendation, setRecommendation] = useState<GenerateStorySoundtrackOutput | null>(null);
+  const [recommendationOutput, setRecommendationOutput] = useState<GenerateStorySoundtrackOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [clientLoaded, setClientLoaded] = useState(false);
@@ -49,13 +49,13 @@ export default function HomePage() {
   }, []);
 
   const handleRecommendation = (data: GenerateStorySoundtrackOutput | null, loading: boolean, err: string | null) => {
-    setRecommendation(data);
+    setRecommendationOutput(data);
     setIsLoading(loading);
     setError(err);
   };
 
   const LoadingSkeleton = () => (
-    <Card className="w-full shadow-lg rounded-xl">
+    <Card className="w-full shadow-lg rounded-xl bg-card/80 backdrop-blur-sm border-primary/20">
       <CardHeader className="text-center p-6">
         <Skeleton className="h-8 w-3/4 mx-auto mb-2" />
         <Skeleton className="h-6 w-1/2 mx-auto" />
@@ -106,7 +106,7 @@ export default function HomePage() {
               <div className="p-3 bg-primary/10 rounded-lg">
                 <Music2 className="h-6 w-6 text-primary" />
               </div>
-              <div className="flex-1 min-w-0"> {/* Added min-w-0 for truncation to work */}
+              <div className="flex-1 min-w-0">
                 <p className="font-semibold text-lg text-foreground truncate">{track.title}</p>
                 <p className="text-sm text-muted-foreground truncate">{track.artist}</p>
               </div>
@@ -136,12 +136,12 @@ export default function HomePage() {
       <main className="flex-grow container mx-auto px-2 sm:px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8">
           
-          <aside className="hidden lg:block lg:col-span-2 xl:col-span-3 order-1 lg:order-none sticky top-8 self-start max-h-[calc(100vh-4rem)] overflow-y-auto pr-2">
-            <AdPlaceholder type="square" className="w-full max-w-[250px] mx-auto lg:mx-0 mb-6" hint="advertisement creative" />
-             <AdPlaceholder type="square" className="w-full max-w-[250px] mx-auto lg:mx-0" hint="advertisement music" />
+          <aside className="hidden lg:block lg:col-span-3 xl:col-span-3 order-1 lg:order-none sticky top-8 self-start max-h-[calc(100vh-4rem)] overflow-y-auto pr-2 space-y-6">
+             <AdPlaceholder type="square" className="w-full max-w-[300px] h-auto aspect-square mx-auto lg:mx-0" hint="advertisement creative" />
+             <AdPlaceholder type="square" className="w-full max-w-[300px] h-auto aspect-square mx-auto lg:mx-0" hint="advertisement music" />
           </aside>
 
-          <div className="lg:col-span-8 xl:col-span-6 w-full max-w-3xl mx-auto lg:mx-0 space-y-12 order-2 lg:order-none">
+          <div className="lg:col-span-6 xl:col-span-6 w-full max-w-3xl mx-auto lg:mx-0 space-y-12 order-2 lg:order-none">
             <section aria-labelledby="main-title" className="text-center">
               <div className="inline-block p-4 bg-primary/10 rounded-full mb-4 shadow-md">
                  <Music size={48} className="mx-auto text-primary" />
@@ -173,7 +173,7 @@ export default function HomePage() {
               {clientLoaded ? (
                 <StorySoundtrackForm onRecommendation={handleRecommendation} setIsLoading={setIsLoading} />
               ) : (
-                <Card className="w-full shadow-xl rounded-2xl">
+                <Card className="w-full shadow-xl rounded-2xl bg-card/80 backdrop-blur-sm border-primary/20">
                   <CardHeader className="p-6">
                     <CardTitle className="text-center text-3xl font-bold text-primary drop-shadow-lg flex items-center justify-center gap-3">
                       <Skeleton className="h-8 w-8 rounded-full bg-primary/30" /> 🎵 Find Your Perfect Story Song
@@ -197,7 +197,7 @@ export default function HomePage() {
 
             {isLoading && (
               <section aria-live="polite" className="w-full">
-                  <h2 className="text-2xl font-semibold text-primary mb-4 text-center sr-only">Loading Recommendation</h2>
+                  <h2 className="text-2xl font-semibold text-primary mb-4 text-center sr-only">Loading Recommendations</h2>
                   <LoadingSkeleton />
               </section>
             )}
@@ -208,30 +208,33 @@ export default function HomePage() {
                     <AlertCircle className="h-5 w-5" />
                     <AlertTitle>Oops! Something went wrong.</AlertTitle>
                     <AlertDescription>
-                      We couldn&apos;t generate a recommendation: {error}. Please try again or simplify your request.
+                      We couldn&apos;t generate recommendations: {error}. Please try again or simplify your request.
                     </AlertDescription>
                   </Alert>
               </section>
             )}
 
-            {recommendation && !isLoading && !error && (
-              <section aria-labelledby="recommendation-section-title" className="w-full">
-                <h2 id="recommendation-section-title" className="text-3xl font-bold text-primary mb-8 text-center">
-                  Your Sonic Match!
+            {recommendationOutput && recommendationOutput.recommendations && !isLoading && !error && (
+              <section aria-labelledby="recommendation-section-title" className="w-full space-y-8">
+                <h2 id="recommendation-section-title" className="text-3xl font-bold text-primary mb-6 text-center">
+                  Your Sonic Matches!
                 </h2>
-                <SongRecommendationCard
-                  songTitle={recommendation.songTitle}
-                  songArtist={recommendation.songArtist}
-                  catchyLyric={recommendation.catchyLyric}
-                  reasoning={recommendation.reasoning}
-                />
+                {recommendationOutput.recommendations.map((rec, index) => (
+                  <SongRecommendationCard
+                    key={index} 
+                    songTitle={rec.songTitle}
+                    songArtist={rec.songArtist}
+                    catchyLyric={rec.catchyLyric}
+                    reasoning={rec.reasoning}
+                  />
+                ))}
               </section>
             )}
           </div>
 
-          <aside className="hidden lg:block lg:col-span-2 xl:col-span-3 order-3 lg:order-none sticky top-8 self-start max-h-[calc(100vh-4rem)] overflow-y-auto pl-2">
-            <AdPlaceholder type="square" className="w-full max-w-[250px] mx-auto lg:mx-0 mb-6" hint="advertisement lifestyle" />
-            <AdPlaceholder type="square" className="w-full max-w-[250px] mx-auto lg:mx-0" hint="advertisement travel" />
+          <aside className="hidden lg:block lg:col-span-3 xl:col-span-3 order-3 lg:order-none sticky top-8 self-start max-h-[calc(100vh-4rem)] overflow-y-auto pl-2 space-y-6">
+             <AdPlaceholder type="square" className="w-full max-w-[300px] h-auto aspect-square mx-auto lg:mx-0" hint="advertisement lifestyle" />
+             <AdPlaceholder type="square" className="w-full max-w-[300px] h-auto aspect-square mx-auto lg:mx-0" hint="advertisement travel" />
           </aside>
         </div>
       </main>
