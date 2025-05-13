@@ -21,9 +21,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Wand2, Camera, Smile, Languages, Send, CalendarClock } from 'lucide-react';
+import { Wand2, Camera, Smile, Languages, Send, CalendarClock, UploadCloud, Palette, Filter, HelpCircle, Type, Globe, Disc, Clock } from 'lucide-react';
 
 const pictureTypeOptions = [
   "Selfie", "Group Photo", "Landscape", "Cityscape", "Food", "Pet", "Fashion", "Travel", "Event/Party", "Artistic/Abstract", "Meme/Funny", "Product", "Behind the Scenes", "Other"
@@ -119,7 +119,6 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
         ...values,
         imageDataUri: imageDataUri,
       };
-      // console.log("Submitting to AI:", input);
       const result = await generateStorySoundtrack(input);
       onRecommendation(result, false, null);
     } catch (error) {
@@ -137,18 +136,28 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
   }
 
   return (
-    <Card className="w-full shadow-xl">
-      <CardHeader>
-        <CardTitle className="text-center text-2xl text-primary flex items-center justify-center gap-2">
-          <Wand2 /> 🎵 Find Your Perfect Story Song
+    <Card className="w-full shadow-xl rounded-2xl border border-primary/20 bg-card/90 backdrop-blur-md">
+      <CardHeader className="p-6">
+        <CardTitle className="text-center text-3xl font-bold text-primary drop-shadow-lg flex items-center justify-center gap-3">
+          <Palette size={32} className="text-accent" />
+          <span>Craft Your Vibe</span>
+          <Wand2 size={32} className="text-accent" />
         </CardTitle>
+        <CardDescription className="text-center text-md text-muted-foreground pt-2">
+        Tell us about your moment, and we&apos;ll find the perfect song to match!
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
             
-            <div>
-              <FormLabel className="text-lg font-semibold flex items-center gap-2 mb-2"><Camera /> 🖼️ Use actual image analysis for better recommendations (Optional)</FormLabel>
+            <div className="p-6 rounded-lg border-2 border-dashed border-accent/50 bg-accent/10 shadow-inner">
+              <FormLabel className="text-xl font-semibold flex items-center gap-3 mb-3 text-accent-foreground">
+                <UploadCloud size={28} /> 🖼️ Visual Spark (Optional)
+              </FormLabel>
+              <FormDescription className="mb-4 text-sm text-accent-foreground/80">
+                Got a photo? Upload it for AI-powered analysis and even more tailored song suggestions. Max 5MB (JPG, PNG, GIF, WEBP).
+              </FormDescription>
               <FormField
                 control={form.control}
                 name="imageFile"
@@ -158,44 +167,45 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                        <Input 
                           type="file" 
                           accept="image/png, image/jpeg, image/gif, image/webp"
+                          className="file:text-primary file:font-semibold file:bg-primary/10 hover:file:bg-primary/20 file:rounded-lg file:border-0 file:px-4 file:py-2 file:mr-4"
                           onChange={(e) => {
                               field.onChange(e.target.files);
                               handleImageChange(e);
                           }}
                        />
                     </FormControl>
-                    <FormDescription>
-                      Max 5MB. (JPG, PNG, GIF, WEBP)
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               {imagePreview && (
-                <div className="mt-4 border border-muted p-2 rounded-md flex justify-center">
+                <div className="mt-6 border-2 border-primary/30 p-3 rounded-lg bg-background/50 flex justify-center items-center shadow-md">
                   <Image
                     src={imagePreview}
-                    alt="Image preview"
-                    width={200}
-                    height={200}
-                    className="rounded-md object-contain max-h-[200px]"
+                    alt="Selected image preview"
+                    width={250}
+                    height={250}
+                    className="rounded-md object-contain max-h-[250px] shadow-lg"
                   />
                 </div>
               )}
             </div>
 
-            <div>
-              <FormLabel className="text-lg font-semibold flex items-center gap-2 mb-2">📸 What's in your picture?</FormLabel>
-              <div className="space-y-4">
+            <div className="space-y-6">
+              <FormLabel className="text-xl font-semibold flex items-center gap-3 text-primary">
+                <Filter size={28} /> 📸 Scene Setting
+                </FormLabel>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
                   name="pictureType"
                   render={({ field }) => (
                     <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><Type size={20}/>Picture Type</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="-- Select a picture type --" />
+                          <SelectTrigger className="bg-input/80">
+                            <SelectValue placeholder="-- Select picture type --" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -215,10 +225,11 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                   name="pictureDescription"
                   render={({ field }) => (
                     <FormItem>
+                       <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><HelpCircle size={20}/>Describe It (Optional)</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="📝 Describe your picture (optional) e.g., Sunset with palm trees, vintage tone..."
-                          className="resize-none"
+                          placeholder="e.g., Vibrant sunset over mountains, neon city lights..."
+                          className="resize-none bg-input/80"
                           {...field}
                         />
                       </FormControl>
@@ -229,17 +240,20 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
               </div>
             </div>
             
-            <div>
-              <FormLabel className="text-lg font-semibold flex items-center gap-2 mb-2"><Smile /> 🎭 What's the mood or vibe?</FormLabel>
-              <div className="space-y-4">
+            <div className="space-y-6">
+              <FormLabel className="text-xl font-semibold flex items-center gap-3 text-primary">
+                <Smile size={28} /> 🎭 Mood & Vibe
+              </FormLabel>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
                   control={form.control}
                   name="mood"
                   render={({ field }) => (
                     <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><Filter size={20}/>Select Mood</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="bg-input/80">
                             <SelectValue placeholder="-- Select a mood --" />
                           </SelectTrigger>
                         </FormControl>
@@ -260,10 +274,11 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                   name="moodDescription"
                   render={({ field }) => (
                     <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><HelpCircle size={20}/>Elaborate (Optional)</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="📝 Describe your mood (optional) e.g., Feeling grateful, chill Sunday vibes..."
-                          className="resize-none"
+                          placeholder="e.g., Feeling ecstatic and free, calm Sunday morning coffee..."
+                          className="resize-none bg-input/80"
                           {...field}
                         />
                       </FormControl>
@@ -274,116 +289,126 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
               </div>
             </div>
 
-            <div>
-              <FormLabel className="text-lg font-semibold flex items-center gap-2 mb-2"><Languages /> 🌍 Preferred language of the song?</FormLabel>
+            <div className="space-y-6">
+              <FormLabel className="text-xl font-semibold flex items-center gap-3 text-primary">
+                <Globe size={28} /> 🌍 Language & Platform
+                </FormLabel>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="preferredLanguage"
                 render={({ field }) => (
                   <FormItem className="space-y-3">
+                    <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><Languages size={20}/>Song Language</FormLabel>
                     <FormControl>
                       <RadioGroup
                         onValueChange={field.onChange}
                         defaultValue={field.value}
-                        className="flex flex-col space-y-1"
+                        className="flex flex-col space-y-2 pt-1"
                       >
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
                             <RadioGroupItem value="Any" />
                           </FormControl>
-                          <FormLabel className="font-normal">Any</FormLabel>
+                          <FormLabel className="font-normal text-foreground/90">Any</FormLabel>
                         </FormItem>
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
                             <RadioGroupItem value="English" />
                           </FormControl>
-                          <FormLabel className="font-normal">English</FormLabel>
+                          <FormLabel className="font-normal text-foreground/90">English</FormLabel>
                         </FormItem>
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
                             <RadioGroupItem value="Specify" />
                           </FormControl>
-                          <FormLabel className="font-normal">Specify</FormLabel>
+                          <FormLabel className="font-normal text-foreground/90">Specify other...</FormLabel>
                         </FormItem>
                       </RadioGroup>
                     </FormControl>
                     <FormMessage />
+                     {preferredLanguageValue === "Specify" && (
+                        <FormField
+                          control={form.control}
+                          name="otherLanguage"
+                          render={({ field: langField }) => ( // Renamed to avoid conflict
+                            <FormItem className="mt-2">
+                              <FormControl>
+                                <Input placeholder="e.g., Spanish, Korean" {...langField} className="bg-input/80" />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      )}
                   </FormItem>
                 )}
               />
-              {preferredLanguageValue === "Specify" && (
-                <FormField
+               <FormField
                   control={form.control}
-                  name="otherLanguage"
+                  name="postingPlatform"
                   render={({ field }) => (
-                    <FormItem className="mt-2">
-                      <FormControl>
-                        <Input placeholder="📝 Other language (if any) e.g., Spanish, Malayalam" {...field} />
-                      </FormControl>
+                    <FormItem>
+                       <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><Send size={20}/>Posting Platform</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="bg-input/80">
+                            <SelectValue placeholder="-- Select platform --" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {platformOptions.map((option) => (
+                            <SelectItem key={option} value={option}>
+                              {option}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-              )}
+              </div>
             </div>
 
-            <div>
-              <FormLabel className="text-lg font-semibold flex items-center gap-2 mb-2"><Send /> 📱 Where are you posting this story?</FormLabel>
-              <FormField
-                control={form.control}
-                name="postingPlatform"
-                render={({ field }) => (
-                  <FormItem>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="-- Select a platform --" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {platformOptions.map((option) => (
-                          <SelectItem key={option} value={option}>
-                            {option}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+
+            <div className="space-y-6">
+              <FormLabel className="text-xl font-semibold flex items-center gap-3 text-primary">
+                <Disc size={28} /> ⏳ Era Preference
+              </FormLabel>
+                <FormField
+                  control={form.control}
+                  name="songRecency"
+                  render={({ field }) => (
+                    <FormItem>
+                       <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><Clock size={20}/>Song Recency</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="bg-input/80">
+                            <SelectValue placeholder="-- Fresh tunes or timeless classics? --" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {recencyOptions.map((option) => (
+                            <SelectItem key={option} value={option}>
+                              {option}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
             </div>
 
-            <div>
-              <FormLabel className="text-lg font-semibold flex items-center gap-2 mb-2"><CalendarClock /> ⏳ How recent should the song be?</FormLabel>
-              <FormField
-                control={form.control}
-                name="songRecency"
-                render={({ field }) => (
-                  <FormItem>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="-- Choose one --" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {recencyOptions.map((option) => (
-                          <SelectItem key={option} value={option}>
-                            {option}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg py-6" disabled={form.formState.isSubmitting}>
-              <Wand2 className="mr-2 h-5 w-5" />
-              🔍 Get My Song & Lyric
+            <Button 
+              type="submit" 
+              className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-xl py-7 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105" 
+              disabled={form.formState.isSubmitting}
+            >
+              <Wand2 className="mr-3 h-6 w-6" />
+              ✨ Conjure My Soundtrack ✨
             </Button>
           </form>
         </Form>
@@ -391,4 +416,3 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
     </Card>
   );
 }
-```

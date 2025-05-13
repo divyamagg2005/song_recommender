@@ -58,15 +58,15 @@ Your goal is to find the perfect soundtrack that aligns with the user's picture,
 User's input:
 - Picture Type: {{{pictureType}}}
 {{#if pictureDescription}}
-- Picture Description: {{{pictureDescription}}}
+- Picture Description: {{{pictureDescription}}} (e.g., Sunset with palm trees, vintage tone...)
 {{/if}}
 - Mood/Vibe: {{{mood}}}
 {{#if moodDescription}}
-- Mood Description: {{{moodDescription}}}
+- Mood Description: {{{moodDescription}}} (e.g., Feeling grateful, chill Sunday vibes...)
 {{/if}}
 - Preferred Language: {{{preferredLanguage}}}
 {{#if otherLanguage}}
-  - Specific Language: {{{otherLanguage}}}
+  - Specific Language: {{{otherLanguage}}} (e.g., Spanish, Malayalam)
 {{/if}}
 - Posting Platform: {{{postingPlatform}}}
 - Desired Song Recency: {{{songRecency}}}
@@ -104,5 +104,3 @@ const generateStorySoundtrackFlow = ai.defineFlow(
     return output;
   }
 );
-
-```
