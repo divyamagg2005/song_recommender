@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -10,6 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle, Music, ListMusic, Info } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardHeader, CardContent, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import AdPlaceholder from '@/components/AdPlaceholder';
 
 
 export default function HomePage() {
@@ -80,86 +82,99 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground font-sans">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8 flex flex-col items-center">
-        <div className="w-full max-w-2xl space-y-12">
-          <section aria-labelledby="main-title" className="text-center">
-            <Music size={48} className="mx-auto text-primary mb-4" />
-            <h1 id="main-title" className="text-4xl font-extrabold tracking-tight text-primary lg:text-5xl">
-              Story Soundtrack
-            </h1>
-            <p className="mt-3 text-xl text-muted-foreground sm:mt-5 sm:text-2xl lg:text-xl xl:text-2xl">
-              Find Your Perfect Instagram Story Soundtrack Every Day!
-            </p>
-            <p className="mt-6 text-md text-foreground max-w-xl mx-auto">
-              Looking for the perfect song to accompany your Instagram story? Whether you&apos;re feeling happy, adventurous, or nostalgic, we recommend the perfect tracks that align with your vibe. Simply choose a mood, and we&apos;ll provide you with a song suggestion along with a catchy lyric that perfectly matches your photo or video!
-            </p>
-          </section>
+      <main className="flex-grow container mx-auto px-4 py-8">
+        <div className="flex flex-col lg:flex-row lg:justify-between gap-x-8">
+          {/* Left Ad Column */}
+          <aside className="hidden lg:block w-[200px] xl:w-[250px] flex-shrink-0 order-1 lg:order-none">
+            <AdPlaceholder type="square" className="sticky top-8 w-full" hint="advertisement side left" />
+          </aside>
 
-          <section aria-labelledby="top-tracks-title">
-            <TopTracksPlaceholder />
-            <p className="text-center text-muted-foreground mt-4">
-              Your personalized recommendations will appear below after submitting the form.
-            </p>
-          </section>
-          
-          <hr className="border-border" />
-
-          <section aria-labelledby="form-section-title" className="w-full">
-             <h2 id="form-section-title" className="text-3xl font-bold text-primary mb-6 text-center">
-              Let&apos;s get to know what kind of song you are looking for
-            </h2>
-            {clientLoaded ? (
-              <StorySoundtrackForm onRecommendation={handleRecommendation} setIsLoading={setIsLoading} />
-            ) : (
-              <Card className="w-full shadow-xl">
-                <CardHeader>
-                   <CardTitle className="text-center text-2xl text-primary flex items-center justify-center gap-2">
-                    <Skeleton className="h-8 w-8 rounded-full" /> 🎵 Find Your Perfect Story Song
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <Skeleton className="h-10 w-full" />
-                  <Skeleton className="h-10 w-full" />
-                  <Skeleton className="h-10 w-full" />
-                  <Skeleton className="h-10 w-full" />
-                  <Skeleton className="h-12 w-full bg-accent/50" />
-                </CardContent>
-              </Card>
-            )}
-          </section>
-
-          {isLoading && (
-             <section aria-live="polite" className="w-full">
-                <h2 className="text-2xl font-semibold text-primary mb-4 text-center sr-only">Loading Recommendation</h2>
-                <LoadingSkeleton />
-             </section>
-          )}
-
-          {error && !isLoading && (
-             <section aria-live="assertive" className="w-full">
-                <Alert variant="destructive" className="shadow-lg">
-                  <AlertCircle className="h-5 w-5" />
-                  <AlertTitle>Oops! Something went wrong.</AlertTitle>
-                  <AlertDescription>
-                    We couldn&apos;t generate a recommendation: {error}. Please try again or simplify your request.
-                  </AlertDescription>
-                </Alert>
-             </section>
-          )}
-
-          {recommendation && !isLoading && !error && (
-            <section aria-labelledby="recommendation-section-title" className="w-full">
-              <h2 id="recommendation-section-title" className="text-3xl font-bold text-primary mb-6 text-center">
-                Your Sonic Match!
-              </h2>
-              <SongRecommendationCard
-                songTitle={recommendation.songTitle}
-                songArtist={recommendation.songArtist}
-                catchyLyric={recommendation.catchyLyric}
-                reasoning={recommendation.reasoning}
-              />
+          {/* Center Content Column */}
+          <div className="w-full max-w-2xl mx-auto lg:mx-0 flex-grow space-y-12 order-2 lg:order-none">
+            <section aria-labelledby="main-title" className="text-center">
+              <Music size={48} className="mx-auto text-primary mb-4" />
+              <h1 id="main-title" className="text-4xl font-extrabold tracking-tight text-primary lg:text-5xl">
+                Story Soundtrack
+              </h1>
+              <p className="mt-3 text-xl text-muted-foreground sm:mt-5 sm:text-2xl lg:text-xl xl:text-2xl">
+                Find Your Perfect Instagram Story Soundtrack Every Day!
+              </p>
+              <p className="mt-6 text-md text-foreground max-w-xl mx-auto">
+                Looking for the perfect song to accompany your Instagram story? Whether you&apos;re feeling happy, adventurous, or nostalgic, we recommend the perfect tracks that align with your vibe. Simply choose a mood, and we&apos;ll provide you with a song suggestion along with a catchy lyric that perfectly matches your photo or video!
+              </p>
             </section>
-          )}
+
+            <section aria-labelledby="top-tracks-title">
+              <TopTracksPlaceholder />
+              <p className="text-center text-muted-foreground mt-4">
+                Your personalized recommendations will appear below after submitting the form.
+              </p>
+            </section>
+            
+            <hr className="border-border" />
+
+            <section aria-labelledby="form-section-title" className="w-full">
+              <h2 id="form-section-title" className="text-3xl font-bold text-primary mb-6 text-center">
+                Let&apos;s get to know what kind of song you are looking for
+              </h2>
+              {clientLoaded ? (
+                <StorySoundtrackForm onRecommendation={handleRecommendation} setIsLoading={setIsLoading} />
+              ) : (
+                <Card className="w-full shadow-xl">
+                  <CardHeader>
+                    <CardTitle className="text-center text-2xl text-primary flex items-center justify-center gap-2">
+                      <Skeleton className="h-8 w-8 rounded-full" /> 🎵 Find Your Perfect Story Song
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <Skeleton className="h-10 w-full" />
+                    <Skeleton className="h-10 w-full" />
+                    <Skeleton className="h-10 w-full" />
+                    <Skeleton className="h-10 w-full" />
+                    <Skeleton className="h-12 w-full bg-accent/50" />
+                  </CardContent>
+                </Card>
+              )}
+            </section>
+
+            {isLoading && (
+              <section aria-live="polite" className="w-full">
+                  <h2 className="text-2xl font-semibold text-primary mb-4 text-center sr-only">Loading Recommendation</h2>
+                  <LoadingSkeleton />
+              </section>
+            )}
+
+            {error && !isLoading && (
+              <section aria-live="assertive" className="w-full">
+                  <Alert variant="destructive" className="shadow-lg">
+                    <AlertCircle className="h-5 w-5" />
+                    <AlertTitle>Oops! Something went wrong.</AlertTitle>
+                    <AlertDescription>
+                      We couldn&apos;t generate a recommendation: {error}. Please try again or simplify your request.
+                    </AlertDescription>
+                  </Alert>
+              </section>
+            )}
+
+            {recommendation && !isLoading && !error && (
+              <section aria-labelledby="recommendation-section-title" className="w-full">
+                <h2 id="recommendation-section-title" className="text-3xl font-bold text-primary mb-6 text-center">
+                  Your Sonic Match!
+                </h2>
+                <SongRecommendationCard
+                  songTitle={recommendation.songTitle}
+                  songArtist={recommendation.songArtist}
+                  catchyLyric={recommendation.catchyLyric}
+                  reasoning={recommendation.reasoning}
+                />
+              </section>
+            )}
+          </div>
+
+          {/* Right Ad Column */}
+          <aside className="hidden lg:block w-[200px] xl:w-[250px] flex-shrink-0 order-3 lg:order-none">
+            <AdPlaceholder type="square" className="sticky top-8 w-full" hint="advertisement side right" />
+          </aside>
         </div>
       </main>
       <Footer />

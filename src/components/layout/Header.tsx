@@ -1,5 +1,5 @@
+
 import Link from 'next/link';
-import AdPlaceholder from '@/components/AdPlaceholder';
 import { Music2 } from 'lucide-react';
 
 export default function Header() {
@@ -14,7 +14,7 @@ export default function Header() {
           {/* Placeholder for potential navigation or user actions */}
         </div>
       </div>
-      <AdPlaceholder type="banner" className="w-full h-24 md:h-16" hint="advertisement banner" />
+      {/* AdPlaceholder removed from here */}
     </header>
   );
 }
