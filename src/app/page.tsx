@@ -9,6 +9,7 @@ import type { AnalyzeImageDescriptionOutput } from '@/ai/flows/analyze-image-des
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle, Music } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 
 export default function HomePage() {

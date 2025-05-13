@@ -92,6 +92,6 @@
   }
   body {
     @apply bg-background text-foreground;
-    @apply font-sans; /* Apply the Geist sans font */
+    /* @apply font-sans; Removed as Geist font is not available */
   }
 }

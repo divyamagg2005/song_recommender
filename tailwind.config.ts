@@ -11,8 +11,8 @@ export default {
   theme: {
   	extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
-        mono: ["var(--font-geist-mono)", ...fontFamily.mono],
+        sans: [...fontFamily.sans], // Removed "var(--font-geist-sans)"
+        mono: [...fontFamily.mono], // Removed "var(--font-geist-mono)"
       },
   		colors: {
   			background: 'hsl(var(--background))',

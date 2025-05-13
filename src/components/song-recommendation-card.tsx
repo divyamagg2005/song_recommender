@@ -1,9 +1,10 @@
+
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import AdPlaceholder from "@/components/AdPlaceholder";
-import { Youtube, Spotify, Music } from "lucide-react"; // Music for Apple Music as placeholder
+import { Youtube, Music, Disc3 } from "lucide-react"; // Music for Apple Music, Disc3 as generic for Spotify
 
 type SongRecommendationCardProps = {
   songRecommendation: string;
@@ -20,7 +21,7 @@ export default function SongRecommendationCard({ songRecommendation, reasoning }
   const searchTerms = encodeURIComponent(`${songTitle}${songArtist ? ` ${songArtist}` : ''}`);
 
   const platformLinks = [
-    { name: "Spotify", url: `https://open.spotify.com/search/${searchTerms}`, icon: Spotify, color: "text-green-500" },
+    { name: "Spotify", url: `https://open.spotify.com/search/${searchTerms}`, icon: Disc3, color: "text-green-500" },
     { name: "Apple Music", url: `https://music.apple.com/us/search?term=${searchTerms}`, icon: Music, color: "text-pink-500" },
     { name: "YouTube", url: `https://www.youtube.com/results?search_query=${searchTerms}`, icon: Youtube, color: "text-red-500" },
   ];
@@ -57,3 +58,4 @@ export default function SongRecommendationCard({ songRecommendation, reasoning }
     </Card>
   );
 }
+
