@@ -4,85 +4,85 @@
 
 @layer base {
   :root {
-    --background: 45 56% 89%; /* Soft beige */
-    --foreground: 224 71% 4%; /* Dark blue, for contrast on beige */
+    --background: 200 100% 95%; /* Very Light Sky Blue */
+    --foreground: 300 80% 25%; /* Deep Magenta */
 
-    --card: 45 56% 93%; /* Slightly lighter beige for cards */
-    --card-foreground: 224 71% 4%;
+    --card: 200 100% 97%; /* Even Lighter Sky Blue */
+    --card-foreground: 300 80% 25%;
 
-    --popover: 45 56% 93%;
-    --popover-foreground: 224 71% 4%;
+    --popover: 200 100% 97%;
+    --popover-foreground: 300 80% 25%;
 
-    --primary: 195 37% 77%; /* Light teal */
-    --primary-foreground: 195 40% 20%; /* Darker teal/blue for text on primary */
+    --primary: 120 100% 50%; /* Bright Lime Green */
+    --primary-foreground: 120 100% 15%; /* Dark Green */
 
-    --secondary: 195 30% 88%; /* Lighter teal as secondary button background */
-    --secondary-foreground: 195 40% 20%; /* Text for secondary button */
+    --secondary: 270 100% 60%; /* Bright Purple */
+    --secondary-foreground: 270 100% 95%; /* Very Light Purple/White */
 
-    --muted: 45 40% 83%; /* Muted beige */
-    --muted-foreground: 45 20% 40%; /* Muted text */
+    --muted: 200 50% 85%; /* Light Sky Blue, less saturated */
+    --muted-foreground: 200 50% 30%; /* Darker Sky Blue */
 
-    --accent: 16 100% 66%; /* Coral */
-    --accent-foreground: 0 0% 100%; /* White text on accent */
+    --accent: 50 100% 55%; /* Bright Yellow-Orange */
+    --accent-foreground: 50 100% 15%; /* Dark Orange */
 
-    --destructive: 0 72% 51%; /* Standard red */
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 100% 50%; /* Bright Red */
+    --destructive-foreground: 0 0% 100%; /* White */
 
-    --border: 45 30% 78%; /* Border color based on beige */
-    --input: 45 40% 95%; /* Lighter beige for input background */
-    --ring: 195 47% 60%; /* Ring color based on teal, slightly more saturated */
+    --border: 200 70% 80%; /* Light Sky Blue Border */
+    --input: 200 100% 98%; /* Extremely Light Sky Blue for input background */
+    --ring: 120 100% 60%; /* Ring color based on Bright Lime Green */
     
     --radius: 0.5rem;
 
-    /* Sidebar variables - kept for theme completeness */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar variables - Bright Light Theme */
+    --sidebar-background: 180 100% 95%; /* Very Light Cyan */
+    --sidebar-foreground: 280 70% 30%; /* Deep Purple */
+    --sidebar-primary: 90 100% 50%; /* Bright Yellow-Green */
+    --sidebar-primary-foreground: 90 100% 10%; /* Dark Yellow-Green */
+    --sidebar-accent: 30 100% 60%; /* Bright Orange */
+    --sidebar-accent-foreground: 30 100% 10%; /* Dark Orange */
+    --sidebar-border: 180 80% 85%; /* Lighter Cyan Border */
+    --sidebar-ring: 90 100% 55%; /* Ring based on Yellow-Green */
   }
 
   .dark {
-    --background: 224 71% 4%; /* Dark Blue */
-    --foreground: 45 56% 89%; /* Soft Beige */
+    --background: 240 50% 10%; /* Very Dark Blue/Indigo */
+    --foreground: 60 100% 90%; /* Pale Bright Yellow */
 
-    --card: 224 71% 8%; 
-    --card-foreground: 45 56% 89%;
+    --card: 240 50% 15%; 
+    --card-foreground: 60 100% 90%;
 
-    --popover: 224 71% 8%;
-    --popover-foreground: 45 56% 89%;
+    --popover: 240 50% 15%;
+    --popover-foreground: 60 100% 90%;
 
-    --primary: 195 37% 77%; /* Light Teal */
-    --primary-foreground: 195 40% 15%; 
+    --primary: 150 100% 50%; /* Bright Cyan/Neon Green */
+    --primary-foreground: 150 100% 10%; 
 
-    --secondary: 195 30% 65%; 
-    --secondary-foreground: 195 40% 15%;
+    --secondary: 330 100% 60%; /* Bright Neon Pink */
+    --secondary-foreground: 330 100% 95%;
 
-    --muted: 224 71% 12%;
-    --muted-foreground: 45 30% 65%;
+    --muted: 240 30% 25%; /* Darker Muted Blue */
+    --muted-foreground: 240 30% 70%; /* Lighter Muted Blue */
 
-    --accent: 16 100% 66%; /* Coral */
-    --accent-foreground: 0 0% 100%; 
+    --accent: 30 100% 60%; /* Bright Orange */
+    --accent-foreground: 30 100% 10%; 
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 100% 55%; /* Bright Red */
+    --destructive-foreground: 0 0% 100%; /* White */
 
-    --border: 224 71% 15%;
-    --input: 224 71% 10%;
-    --ring: 195 47% 70%;
+    --border: 240 40% 25%; /* Dark Blue Border */
+    --input: 240 50% 20%; /* Dark Blue Input */
+    --ring: 150 100% 60%; /* Ring color based on Bright Cyan */
     
-    /* Dark sidebar variables */
-    --sidebar-background: 224 71% 6%;
-    --sidebar-foreground: 45 40% 90%;
-    --sidebar-primary: 195 37% 77%;
-    --sidebar-primary-foreground: 195 40% 15%;
-    --sidebar-accent: 16 100% 66%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 224 71% 12%;
-    --sidebar-ring: 195 47% 70%;
+    /* Sidebar variables - Bright Dark Theme */
+    --sidebar-background: 260 60% 8%; /* Very Dark Purple */
+    --sidebar-foreground: 180 100% 85%; /* Light Neon Cyan */
+    --sidebar-primary: 40 100% 55%; /* Bright Gold */
+    --sidebar-primary-foreground: 40 100% 10%; /* Dark Gold */
+    --sidebar-accent: 300 100% 65%; /* Neon Magenta */
+    --sidebar-accent-foreground: 300 100% 95%; /* Light Magenta */
+    --sidebar-border: 260 50% 20%; /* Darker Purple Border */
+    --sidebar-ring: 40 100% 60%; /* Ring based on Gold */
   }
 }
 
@@ -92,6 +92,5 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* @apply font-sans; Removed as Geist font is not available */
   }
 }
