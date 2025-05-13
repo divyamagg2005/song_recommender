@@ -119,6 +119,11 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
         ...values,
         imageDataUri: imageDataUri,
       };
+      // Ensure optional fields are not undefined, but rather null or empty string if not provided
+      if (!input.pictureDescription) input.pictureDescription = "";
+      if (!input.moodDescription) input.moodDescription = "";
+      if (!input.otherLanguage) input.otherLanguage = "";
+
       const result = await generateStorySoundtrack(input);
       onRecommendation(result, false, null);
     } catch (error) {
@@ -151,12 +156,12 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
             
-            <div className="p-6 rounded-lg border-2 border-dashed border-accent/50 bg-accent/10 shadow-inner">
+            <div className="px-6 py-8 rounded-lg border-2 border-dashed border-accent/50 bg-accent/10 shadow-inner">
               <FormLabel className="text-xl font-semibold flex items-center gap-3 mb-3 text-accent-foreground">
                 <UploadCloud size={28} /> 🖼️ Visual Spark (Optional)
               </FormLabel>
               <FormDescription className="mb-4 text-sm text-accent-foreground/80">
-                Got a photo? Upload it for AI-powered analysis and even more tailored song suggestions. Max 5MB (JPG, PNG, GIF, WEBP).
+                Use actual image analysis for better recommendations. Max 5MB (JPG, PNG, GIF, WEBP).
               </FormDescription>
               <FormField
                 control={form.control}
@@ -193,7 +198,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
 
             <div className="space-y-6">
               <FormLabel className="text-xl font-semibold flex items-center gap-3 text-primary">
-                <Filter size={28} /> 📸 Scene Setting
+                <Camera size={28} /> 📸 What&apos;s in your picture?
                 </FormLabel>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
@@ -205,7 +210,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger className="bg-input/80">
-                            <SelectValue placeholder="-- Select picture type --" />
+                            <SelectValue placeholder="-- Select a picture type --" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -225,10 +230,10 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                   name="pictureDescription"
                   render={({ field }) => (
                     <FormItem>
-                       <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><HelpCircle size={20}/>Describe It (Optional)</FormLabel>
+                       <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><HelpCircle size={20}/>Describe your picture (optional)</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="e.g., Vibrant sunset over mountains, neon city lights..."
+                          placeholder="e.g., Sunset with palm trees, vintage tone..."
                           className="resize-none bg-input/80"
                           {...field}
                         />
@@ -242,7 +247,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
             
             <div className="space-y-6">
               <FormLabel className="text-xl font-semibold flex items-center gap-3 text-primary">
-                <Smile size={28} /> 🎭 Mood & Vibe
+                <Smile size={28} /> 🎭 What&apos;s the mood or vibe?
               </FormLabel>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
@@ -274,10 +279,10 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                   name="moodDescription"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><HelpCircle size={20}/>Elaborate (Optional)</FormLabel>
+                      <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><HelpCircle size={20}/>Describe your mood (optional)</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="e.g., Feeling ecstatic and free, calm Sunday morning coffee..."
+                          placeholder="e.g., Feeling grateful, chill Sunday vibes..."
                           className="resize-none bg-input/80"
                           {...field}
                         />
@@ -291,7 +296,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
 
             <div className="space-y-6">
               <FormLabel className="text-xl font-semibold flex items-center gap-3 text-primary">
-                <Globe size={28} /> 🌍 Language & Platform
+                <Globe size={28} /> 🌍 Preferred language of the song?
                 </FormLabel>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
@@ -331,10 +336,11 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                         <FormField
                           control={form.control}
                           name="otherLanguage"
-                          render={({ field: langField }) => ( // Renamed to avoid conflict
+                          render={({ field: langField }) => ( 
                             <FormItem className="mt-2">
+                              <FormLabel className="text-xs text-muted-foreground">Other language (if any)</FormLabel>
                               <FormControl>
-                                <Input placeholder="e.g., Spanish, Korean" {...langField} className="bg-input/80" />
+                                <Input placeholder="e.g., Spanish, Malayalam" {...langField} className="bg-input/80" />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -349,7 +355,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                   name="postingPlatform"
                   render={({ field }) => (
                     <FormItem>
-                       <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><Send size={20}/>Posting Platform</FormLabel>
+                       <FormLabel className="flex items-center gap-2 text-md font-medium text-foreground/90"><Send size={20}/>Where are you posting this story?</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger className="bg-input/80">
@@ -374,7 +380,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
 
             <div className="space-y-6">
               <FormLabel className="text-xl font-semibold flex items-center gap-3 text-primary">
-                <Disc size={28} /> ⏳ Era Preference
+                <CalendarClock size={28} /> ⏳ How recent should the song be?
               </FormLabel>
                 <FormField
                   control={form.control}
@@ -385,7 +391,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger className="bg-input/80">
-                            <SelectValue placeholder="-- Fresh tunes or timeless classics? --" />
+                            <SelectValue placeholder="-- Choose one --" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -408,7 +414,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
               disabled={form.formState.isSubmitting}
             >
               <Wand2 className="mr-3 h-6 w-6" />
-              ✨ Conjure My Soundtrack ✨
+              🔍 Get My Song & Lyric
             </Button>
           </form>
         </Form>
