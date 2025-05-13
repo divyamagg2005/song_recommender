@@ -4,89 +4,87 @@
 
 @layer base {
   :root {
-    --background: 200 100% 95%; /* Very Light Sky Blue */
-    --foreground: 300 80% 25%; /* Deep Magenta */
+    --background: 200 100% 90%; /* Electric Sky Blue */
+    --foreground: 300 100% 10%; /* Deep Cosmic Purple */
 
-    --card: 200 100% 97%; /* Even Lighter Sky Blue */
-    --card-foreground: 300 80% 25%;
+    --card: 220 100% 95%; /* Luminous Ice Blue */
+    --card-foreground: 300 100% 10%;
 
-    --popover: 200 100% 97%;
-    --popover-foreground: 300 80% 25%;
+    --popover: 220 100% 95%;
+    --popover-foreground: 300 100% 10%;
 
-    --primary: 120 100% 50%; /* Bright Lime Green */
-    --primary-foreground: 120 100% 15%; /* Dark Green */
+    --primary: 50 100% 50%; /* Blazing Sun Yellow */
+    --primary-foreground: 50 100% 5%; /* Dark Sun Yellow */
 
-    --secondary: 270 100% 60%; /* Bright Purple */
-    --secondary-foreground: 270 100% 95%; /* Very Light Purple/White */
+    --secondary: 130 100% 50%; /* Radioactive Lime Green */
+    --secondary-foreground: 130 100% 95%; /* Near-White Lime */
 
-    --muted: 200 50% 85%; /* Light Sky Blue, less saturated */
-    --muted-foreground: 200 50% 30%; /* Darker Sky Blue */
+    --muted: 240 50% 85%; /* Soft Nebula Lilac */
+    --muted-foreground: 240 30% 35%; /* Muted Space Grey */
 
-    --accent: 50 100% 55%; /* Bright Yellow-Orange */
-    --accent-foreground: 50 100% 15%; /* Dark Orange */
+    --accent: 0 100% 60%; /* Supernova Red-Orange */
+    --accent-foreground: 0 100% 5%; /* Dark Supernova Red */
 
-    --destructive: 0 100% 50%; /* Bright Red */
-    --destructive-foreground: 0 0% 100%; /* White */
+    --destructive: 330 100% 55%; /* Atomic Pink */
+    --destructive-foreground: 0 0% 100%; /* Pure White */
 
-    --border: 200 70% 80%; /* Light Sky Blue Border */
-    --input: 200 100% 98%; /* Extremely Light Sky Blue for input background */
-    --ring: 120 100% 60%; /* Ring color based on Bright Lime Green */
+    --border: 200 80% 80%; /* Light Cyan Border */
+    --input: 200 100% 97%; /* Ultra-Light Cyan Input */
+    --ring: 50 100% 55%; /* Ring based on Blazing Sun Yellow */
     
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Slightly larger radius for a softer, modern feel */
 
-    /* Sidebar variables - Bright Light Theme */
-    --sidebar-background: 180 100% 95%; /* Very Light Cyan */
-    --sidebar-foreground: 280 70% 30%; /* Deep Purple */
-    --sidebar-primary: 90 100% 50%; /* Bright Yellow-Green */
-    --sidebar-primary-foreground: 90 100% 10%; /* Dark Yellow-Green */
-    --sidebar-accent: 30 100% 60%; /* Bright Orange */
-    --sidebar-accent-foreground: 30 100% 10%; /* Dark Orange */
-    --sidebar-border: 180 80% 85%; /* Lighter Cyan Border */
-    --sidebar-ring: 90 100% 55%; /* Ring based on Yellow-Green */
+    /* Sidebar variables - Abstract Bright Light Theme */
+    --sidebar-background: 180 100% 88%; /* Glacial Teal */
+    --sidebar-foreground: 270 100% 15%; /* Deep Galactic Indigo */
+    --sidebar-primary: 80 100% 50%; /* Alien Chartreuse */
+    --sidebar-primary-foreground: 80 100% 5%; /* Dark Alien Chartreuse */
+    --sidebar-accent: 30 100% 55%; /* Solar Flare Orange */
+    --sidebar-accent-foreground: 30 100% 5%; /* Dark Solar Flare Orange */
+    --sidebar-border: 180 70% 75%; /* Muted Glacial Teal Border */
+    --sidebar-ring: 80 100% 55%; /* Ring based on Alien Chartreuse */
   }
 
   .dark {
-    --background: 240 50% 10%; /* Very Dark Blue/Indigo */
-    --foreground: 60 100% 90%; /* Pale Bright Yellow */
+    --background: 280 90% 5%; /* Abyssal Violet */
+    --foreground: 160 100% 85%; /* Ectoplasmic Green */
 
-    --card: 240 50% 15%; 
-    --card-foreground: 60 100% 90%;
+    --card: 280 80% 10%; /* Dark Matter Violet */
+    --card-foreground: 160 100% 85%;
 
-    --popover: 240 50% 15%;
-    --popover-foreground: 60 100% 90%;
+    --popover: 280 80% 10%;
+    --popover-foreground: 160 100% 85%;
 
-    --primary: 150 100% 50%; /* Bright Cyan/Neon Green */
-    --primary-foreground: 150 100% 10%; 
+    --primary: 100 100% 60%; /* Cyber Yellow */
+    --primary-foreground: 100 100% 5%; /* Dark Cyber Yellow */
 
-    --secondary: 330 100% 60%; /* Bright Neon Pink */
-    --secondary-foreground: 330 100% 95%;
+    --secondary: 200 100% 60%; /* Plasma Blue */
+    --secondary-foreground: 200 100% 95%; /* Near-White Plasma */
 
-    --muted: 240 30% 25%; /* Darker Muted Blue */
-    --muted-foreground: 240 30% 70%; /* Lighter Muted Blue */
+    --muted: 260 60% 15%; /* Stardust Purple */
+    --muted-foreground: 260 50% 70%; /* Light Stardust Purple */
 
-    --accent: 30 100% 60%; /* Bright Orange */
-    --accent-foreground: 30 100% 10%; 
+    --accent: 350 100% 65%; /* Hyper Pink */
+    --accent-foreground: 350 100% 5%; /* Dark Hyper Pink */
 
-    --destructive: 0 100% 55%; /* Bright Red */
-    --destructive-foreground: 0 0% 100%; /* White */
+    --destructive: 20 100% 50%; /* Magma Orange */
+    --destructive-foreground: 0 0% 100%; /* Pure White */
 
-    --border: 240 40% 25%; /* Dark Blue Border */
-    --input: 240 50% 20%; /* Dark Blue Input */
-    --ring: 150 100% 60%; /* Ring color based on Bright Cyan */
+    --border: 280 70% 20%; /* Deep Violet Border */
+    --input: 280 80% 12%; /* Dark Abyssal Violet Input */
+    --ring: 100 100% 65%; /* Ring based on Cyber Yellow */
     
-    /* Sidebar variables - Bright Dark Theme */
-    --sidebar-background: 260 60% 8%; /* Very Dark Purple */
-    --sidebar-foreground: 180 100% 85%; /* Light Neon Cyan */
-    --sidebar-primary: 40 100% 55%; /* Bright Gold */
-    --sidebar-primary-foreground: 40 100% 10%; /* Dark Gold */
-    --sidebar-accent: 300 100% 65%; /* Neon Magenta */
-    --sidebar-accent-foreground: 300 100% 95%; /* Light Magenta */
-    --sidebar-border: 260 50% 20%; /* Darker Purple Border */
-    --sidebar-ring: 40 100% 60%; /* Ring based on Gold */
+    /* Sidebar variables - Abstract Bright Dark Theme */
+    --sidebar-background: 310 95% 8%; /* Void Magenta */
+    --sidebar-foreground: 100 100% 80%; /* Pulsar Yellow-Green */
+    --sidebar-primary: 40 100% 58%; /* Quasar Gold */
+    --sidebar-primary-foreground: 40 100% 8%; /* Dark Quasar Gold */
+    --sidebar-accent: 220 100% 70%; /* Nebula Cerulean */
+    --sidebar-accent-foreground: 220 100% 98%; /* Light Nebula Cerulean */
+    --sidebar-border: 310 85% 18%; /* Darker Void Magenta Border */
+    --sidebar-ring: 40 100% 62%; /* Ring based on Quasar Gold */
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
