@@ -23,7 +23,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Wand2, Camera, Smile, Languages, Send, CalendarClock, UploadCloud, Palette, Filter, HelpCircle, Type, Globe, Disc, Clock } from 'lucide-react';
+import { Wand2, Camera, Smile, Languages, Send, CalendarClock, UploadCloud, Palette, Filter, HelpCircle, Type, Globe, Clock } from 'lucide-react';
 
 const pictureTypeOptions = [
   "Selfie", "Group Photo", "Landscape", "Cityscape", "Food", "Pet", "Fashion", "Travel", "Event/Party", "Artistic/Abstract", "Meme/Funny", "Product", "Behind the Scenes", "Other"
@@ -156,7 +156,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
             
-            <div className="px-6 py-8 rounded-lg border-2 border-dashed border-accent/50 bg-accent/10 shadow-inner">
+            <div className="px-6 py-8 rounded-lg border-2 border-dashed border-accent/50 bg-accent/10 shadow-inner min-h-[250px]">
               <FormLabel className="text-xl font-semibold flex items-center gap-3 mb-3 text-accent-foreground">
                 <UploadCloud size={28} /> 🖼️ Visual Spark (Optional)
               </FormLabel>
@@ -172,7 +172,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                        <Input 
                           type="file" 
                           accept="image/png, image/jpeg, image/gif, image/webp"
-                          className="file:text-primary file:font-semibold file:bg-primary/10 hover:file:bg-primary/20 file:rounded-lg file:border-0 file:px-4 file:py-2 file:mr-4"
+                          className="h-11 file:text-primary file:font-semibold file:bg-primary/10 hover:file:bg-primary/20 file:rounded-lg file:border-0 file:px-4 file:py-2 file:mr-4"
                           onChange={(e) => {
                               field.onChange(e.target.files);
                               handleImageChange(e);
