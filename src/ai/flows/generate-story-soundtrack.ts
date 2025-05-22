@@ -14,6 +14,7 @@ import {z} from 'genkit';
 const GenerateStorySoundtrackInputSchema = z.object({
   imageDataUri: z
     .string()
+    .nullable() // ← Add this to allow null values
     .optional()
     .describe(
       "Optional: A photo for analysis, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
@@ -21,12 +22,21 @@ const GenerateStorySoundtrackInputSchema = z.object({
   pictureType: z.string().describe('The type of picture (e.g., Selfie, Landscape, Food).'),
   pictureDescription: z
     .string()
+    .nullable() // ← Add this too for consistency
     .optional()
     .describe('User-provided description of the picture.'),
   mood: z.string().describe('The mood or vibe the user is going for (e.g., Happy, Chill, Adventurous).'),
-  moodDescription: z.string().optional().describe('User-provided description of the mood.'),
+  moodDescription: z
+    .string()
+    .nullable() // ← And this
+    .optional()
+    .describe('User-provided description of the mood.'),
   preferredLanguage: z.string().describe('Preferred language for the song. Can be "Any" or a specific language code/name.'),
-  otherLanguage: z.string().optional().describe('Specific language if preferredLanguage is not "Any".'),
+  otherLanguage: z
+    .string()
+    .nullable() // ← And this
+    .optional()
+    .describe('Specific language if preferredLanguage is not "Any".'),
   postingPlatform: z.string().describe('Platform where the story will be posted (e.g., Instagram, TikTok).'),
   songRecency: z.string().describe('How recent the song should be (e.g., Latest Hits, Classics).'),
 });
