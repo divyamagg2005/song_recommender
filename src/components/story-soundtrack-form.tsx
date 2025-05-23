@@ -188,7 +188,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
           <Wand2 size={32} className="text-accent" />
         </CardTitle>
         <CardDescription className="text-center text-md text-muted-foreground pt-2">
-        Tell us about your moment, and we&apos;ll find the perfect song to match!
+        Tell us about your moment, and we&apos;ll find the perfect song to match! In case some recommendations are not generated (assuming picture is also uploaded) try to reduce the size of the image or describing the image to best of the details for best recommendations .
         </CardDescription>
       </CardHeader>
       <CardContent className="p-6">
@@ -200,7 +200,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                 <UploadCloud size={28} /> 🖼️ Visual Spark (Optional)
               </FormLabel>
               <FormDescription className="mb-4 text-sm text-accent-foreground/80">
-                Use actual image analysis for better recommendations. Max 2MB (JPG, PNG, JPEG).
+                Use actual image analysis for better recommendations. Max 1MB (JPG, PNG, JPEG). 
               </FormDescription>
               <FormField
                 control={form.control}
