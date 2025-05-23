@@ -3,6 +3,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import imageCompression from 'browser-image-compression';
 import * as z from "zod";
 import { useState, type ChangeEvent, useEffect } from "react";
 import Image from "next/image";
@@ -88,23 +89,61 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      // Optional: Check original file size before compression if needed
       if (file.size > 5 * 1024 * 1024) { // 5MB limit
         toast({
           variant: "destructive",
           title: "Image too large",
-          description: "Please upload an image smaller than 5MB.",
+          description: "Please select an image smaller than 5MB before compression.",
         });
         form.setValue("imageFile", undefined);
         setImagePreview(null);
         setImageDataUri(null);
         return;
       }
+
+      console.log(`Original image size: ${file.size / 1024 / 1024} MB`);
+
+      // Compression options - TUNE THESE CAREFULLY!
+      const options = {
+        maxSizeMB: 1, // Target compressed image file size (e.g., 1MB).
+        // Base64 will be ~33% larger than this.
+        maxWidthOrHeight: 1920, // Optional: Resize images to a max dimension.
+        useWebWorker: true, // Improves performance by offloading compression.
+        // initialQuality: 0.7, // For JPEGs, between 0 and 1.
+        // alwaysKeepResolution: false, // If true, will not resize based on maxWidthOrHeight
+      };
+
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-        setImageDataUri(reader.result as string);
+        const imageDataUri = reader.result as string; // This is your Base64 string
+        console.log('Successfully compressed and converted to Base64.');
+        // Update the form state or data with the compressed image data URI
+        form.setValue('picture', imageDataUri); // Assuming 'picture' is the field name for your image
+        setImagePreview(imageDataUri); // Update the preview
+        setImageDataUri(imageDataUri); // Store for onSubmit
       };
-      reader.readAsDataURL(file);
+      reader.onerror = (error) => {
+        console.error('Error reading compressed file:', error);
+        toast({
+          title: 'Image processing failed',
+          description: 'Could not process the image after compression.',
+          variant: 'destructive',
+        });
+        form.setValue("imageFile", undefined);
+        setImagePreview(null);
+        setImageDataUri(null);
+      };
+
+      imageCompression(file, options)
+        .then((compressedFile) => {
+          console.log(`Compressed image size: ${compressedFile.size / 1024 / 1024} MB`);
+          reader.readAsDataURL(compressedFile);
+        })
+        .catch((error) => {
+          console.error('Image compression error:', error);
+          toast({ title: 'Image compression failed', description: `Error: ${error.message}`, variant: 'destructive', });
+        });
     } else {
       setImagePreview(null);
       setImageDataUri(null);
