@@ -200,7 +200,7 @@ export default function StorySoundtrackForm({ onRecommendation, setIsLoading }: 
                 <UploadCloud size={28} /> 🖼️ Visual Spark (Optional)
               </FormLabel>
               <FormDescription className="mb-4 text-sm text-accent-foreground/80">
-                Use actual image analysis for better recommendations. Max 1MB (JPG, PNG, GIF, WEBP).
+                Use actual image analysis for better recommendations. Max 2MB (JPG, PNG, JPEG).
               </FormDescription>
               <FormField
                 control={form.control}
